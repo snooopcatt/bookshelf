@@ -1,0 +1,30 @@
+.search-field {
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: white;
+}
+
+.search-field i {
+    height: 100%;
+    width: 2em;
+    position: relative;
+}
+
+.search-field i:before {
+    content: "";
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNSAxNSI+PHBhdGggZD0iTTYgNiBMMTMgMTMiIHN0cm9rZT0iYmxhY2siPjwvcGF0aD48Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iNSI+PC9jaXJjbGU+PGNpcmNsZSBjeD0iNiIgY3k9IjYiIHI9IjQiIGZpbGw9IndoaXRlIj48L2NpcmNsZT48L3N2Zz4=");
+    background-repeat: no-repeat;
+}
+
+.search-field input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+}
