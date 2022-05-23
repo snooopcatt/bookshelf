@@ -3,6 +3,7 @@ import './App.css';
 import BookShelf from './components/BookShelf';
 
 function App() {
+  console.log('app');
   return (
     <div className="App">
       <Header />

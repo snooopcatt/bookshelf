@@ -11,6 +11,14 @@ export const dataSlice = createSlice({
             {
                 "author": "Jules Verne",
                 "title": "20,000 Leagues Under the Sea"
+            },
+            {
+                "author": "Charles Dickens",
+                "title": "A Christmas Carol"
+            },
+            {
+                "author": "Philip Reeve",
+                "title": "A Darkling Plain"
             }
         ]
     }
