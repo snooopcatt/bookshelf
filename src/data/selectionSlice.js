@@ -6,12 +6,6 @@ export const selectionSlice = createSlice({
         index: -1
     },
     reducers: {
-        next: (state, action) => {
-            state.index = action.payload;
-        },
-        previous: (state, action) => {
-            state.index = action.payload;
-        },
         select: (state, action) => {
             state.index = action.payload;
         }

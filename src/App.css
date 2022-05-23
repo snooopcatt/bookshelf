@@ -1,5 +1,6 @@
 @import url(resources/Book.css);
 @import url(resources/BookShelf.css);
+@import url(resources/BookView.css);
 @import url(resources/Header.css);
 @import url(resources/SearchField.css);
 
@@ -14,10 +15,12 @@ html, body, #root, .App {
 .App {
   display: flex;
   flex-flow: column nowrap;
+  overflow: hidden;
 }
 
 .content {
   flex: 1;
   display: flex;
   flex-flow: row nowrap;
+  overflow: hidden;
 }
