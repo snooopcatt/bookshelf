@@ -1,6 +1,7 @@
 const Book = props => {
     return (
         <div
+            data-index={props.index}
             className={`book-item ${props.selected ? 'selected' : ''}`}
             onClick={props.onClick}
         >

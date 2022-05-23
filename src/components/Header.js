@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useSelector } from "react-redux";
 import SearchField from "./SearchField";
 
 const Header = () => {
-    const [away, setAway] = useState(0);
-    const [atHome, setAtHome] = useState(5);
-    const [total, setTotal] = useState(154);
+    const away = useSelector(state => state.books.away);
+    const atHome = useSelector(state => state.books.atHome);
+    const total = useSelector(state => state.books.total);
 
     return (
         <div className="shelf-header">

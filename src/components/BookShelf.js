@@ -12,13 +12,15 @@ const BookShelf = () => {
     const shelfRef = useRef(null);
 
     useEffect(() => {
-        const keyDownHandler = ({ key }) => {
-            console.log(key);
-            switch (key) {
+        const keyDownHandler = event => {
+            console.log(event.key);
+            switch (event.key) {
                 case 'ArrowDown':
+                    event.preventDefault();
                     dispatch(select(Math.min(selectedIndex + 1, books.length - 1)));
                     break;
                 case 'ArrowUp':
+                    event.preventDefault();
                     dispatch(select(Math.max(selectedIndex - 1, 0)));
                     break;
                 default:
@@ -35,10 +37,17 @@ const BookShelf = () => {
         }
     });
 
+    // Scroll selected item into view
+    useEffect(() => {
+        const el = shelfRef.current.querySelector(`[data-index='${selectedIndex}']`);
+        el?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }, [selectedIndex, shelfRef]);
+
     return (
         <div ref={shelfRef} className="book-shelf" tabIndex="0">
             {books.map((book, i) => 
                 <Book 
+                    index={i}  
                     key={i}
                     book={book}
                     selected={i === selectedIndex}
