@@ -1,14 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
 import Header from './components/Header';
+import './App.css';
+import BookShelf from './components/BookShelf';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <div class="content">
-        <table style={{ flex: 1 }}></table>
-        <div class="preview" style={{ flex: 1 }}></div>
+      <div className="content">
+        <BookShelf />
+        <div className="preview" style={{ flex: 1 }}></div>
       </div>
     </div>
   );

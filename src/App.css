@@ -1,3 +1,5 @@
+@import url(resources/Book.css);
+@import url(resources/BookShelf.css);
 @import url(resources/Header.css);
 @import url(resources/SearchField.css);
 
@@ -5,7 +7,7 @@
   box-sizing: content-box;
 }
 
-html, body, #root {
+html, body, #root, .App {
   height: 100%;
 }
 
