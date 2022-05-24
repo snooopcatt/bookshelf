@@ -4,7 +4,7 @@ import Book from "./Book";
 import { select } from "../data/dataSlice";
 
 const BookShelf = () => {
-    console.log('render');
+    console.log('Book shelf');
     const books = useSelector(state => state.books.value);
     const selectedIndex = useSelector(state => state.books.index);
     const dispatch = useDispatch();
