@@ -7,4 +7,4 @@ export default configureStore({
       books: dataSlice,
       selection: selectionSlice
   }
-});
+}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

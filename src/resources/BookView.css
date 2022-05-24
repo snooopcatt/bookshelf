@@ -2,3 +2,17 @@
     flex: 1;
     padding: 2em 4em;
 }
+
+.book-view > h1 {
+    margin-bottom: 0;
+}
+
+.book-view .book-author {
+    padding-bottom: 2em;
+}
+
+.book-view .given-to {
+    margin-top: 1em;
+    display: flex;
+    flex-flow: column nowrap;
+}
