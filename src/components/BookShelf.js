@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Book from "./Book";
-import { select } from "../data/selectionSlice";
+import { select } from "../data/dataSlice";
 
 const BookShelf = () => {
     console.log('render');
     const books = useSelector(state => state.books.value);
-    const selectedIndex = useSelector(state => state.selection.index);
+    const selectedIndex = useSelector(state => state.books.index);
     const dispatch = useDispatch();
 
     const shelfRef = useRef(null);

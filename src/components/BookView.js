@@ -4,7 +4,7 @@ import { give, take } from "../data/dataSlice";
 
 const BookView = () => {
     const books = useSelector(state => state.books.value);
-    const selectedIndex = useSelector(state => state.selection.index);
+    const selectedIndex = useSelector(state => state.books.index);
     const book = books[selectedIndex];
     const given = !!book && 'given' in book;
 

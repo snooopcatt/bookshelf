@@ -13,6 +13,10 @@ const updateCounters = (state, array) => {
     state.total = total;
     state.away = away;
     state.atHome = atHome;
+
+    state.index = -1;
+
+    state.value = array;
 }
 
 export const dataSlice = createSlice({
@@ -22,34 +26,36 @@ export const dataSlice = createSlice({
         value: [],
         atHome: 0,
         away: 0,
-        total: 0
+        total: 0,
+        index: -1
     },
     reducers: {
         setData(state, action) {
             const books = action.payload;
 
-            updateCounters(state, books);
-
             state.data = books;
-            state.value = books;
+
+            updateCounters(state, books);
         },
         filter(state, action) {
             const query = action.payload;
 
             if (query === '') {
-                state.value = state.data;
+                updateCounters(state, state.data);
             }
             else {
                 const bits = query.trim().split(' ').filter(r => r !== '');
                 const res = bits.map(b => new RegExp(b, 'i'));
-                const filtered = state.data.filter(item => {
+                updateCounters(state, state.data.filter(item => {
                     return res.every(re => re.test(item.title) || re.test(item.author));
-                });
-                
-                updateCounters(state, filtered);
-                
-                state.value = filtered;
+                }));
             }
+        },
+        filterAway(state) {
+            updateCounters(state, state.data.filter(item => item.given));
+        },
+        filterAtHome(state) {
+            updateCounters(state, state.data.filter(item => !item.given));
         },
         take(state, action) {
             const book = state.value[action.payload];
@@ -75,10 +81,25 @@ export const dataSlice = createSlice({
                 to,
                 on: new Date().toISOString().slice(0, 10)
             }
+        },
+        select(state, action) {
+            state.index = action.payload;
+        },
+        reset(state) {
+            state.index = -1;
         }
     }
 });
 
-export const { setData, filter, give, take } = dataSlice.actions;
+export const {
+    setData,
+    filter,
+    filterAway,
+    filterAtHome,
+    give,
+    take,
+    select,
+    reset
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
