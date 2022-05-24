@@ -1,8 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const updateCounters = (state, array) => {
+    const total = array.length;
+    const away = array.reduce((counter, item) => {
+        if (item.given) {
+            counter++;
+        }
+        return counter;
+    }, 0);
+    const atHome = total - away;
+
+    state.total = total;
+    state.away = away;
+    state.atHome = atHome;
+}
+
 export const dataSlice = createSlice({
     name: 'records',
     initialState: {
+        data: [],
         value: [],
         atHome: 0,
         away: 0,
@@ -12,18 +28,28 @@ export const dataSlice = createSlice({
         setData(state, action) {
             const books = action.payload;
 
-            state.total = books.length;
-            
-            state.away = books.reduce((counter, item) => {
-                if (item.given) {
-                    counter++;
-                }
-                return counter;
-            }, 0);
+            updateCounters(state, books);
 
-            state.atHome = state.total - state.away;
-
+            state.data = books;
             state.value = books;
+        },
+        filter(state, action) {
+            const query = action.payload;
+
+            if (query === '') {
+                state.value = state.data;
+            }
+            else {
+                const bits = query.trim().split(' ').filter(r => r !== '');
+                const res = bits.map(b => new RegExp(b, 'i'));
+                const filtered = state.data.filter(item => {
+                    return res.every(re => re.test(item.title) || re.test(item.author));
+                });
+                
+                updateCounters(state, filtered);
+                
+                state.value = filtered;
+            }
         },
         take(state, action) {
             const book = state.value[action.payload];
@@ -53,6 +79,6 @@ export const dataSlice = createSlice({
     }
 });
 
-export const { setData, give, take } = dataSlice.actions;
+export const { setData, filter, give, take } = dataSlice.actions;
 
 export default dataSlice.reducer;
