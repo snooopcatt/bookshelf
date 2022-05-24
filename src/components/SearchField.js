@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filter } from "../data/dataSlice";
 
 const SearchField = () => {
+    const storedQuery = useSelector(state => state.books.query);
     const dispatch = useDispatch();
 
     const [query, setQuery] = useState('');
+
+    if (storedQuery !== query) {
+        setQuery(storedQuery);
+    }
 
     const onChange = event => {
         const value = event.target.value;

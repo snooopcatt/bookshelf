@@ -27,11 +27,14 @@ export const dataSlice = createSlice({
         atHome: 0,
         away: 0,
         total: 0,
-        index: -1
+        index: -1,
+        query: ''
     },
     reducers: {
         setData(state, action) {
             const books = action.payload;
+
+            books.forEach((book, index) => book.id = index + 1);
 
             state.data = books;
 
@@ -40,6 +43,8 @@ export const dataSlice = createSlice({
         filter(state, action) {
             const query = action.payload;
 
+            state.query = query;
+            
             if (query === '') {
                 updateCounters(state, state.data);
             }
@@ -52,34 +57,45 @@ export const dataSlice = createSlice({
             }
         },
         filterAway(state) {
+            state.query = '';
             updateCounters(state, state.data.filter(item => item.given));
         },
         filterAtHome(state) {
+            state.query = '';
             updateCounters(state, state.data.filter(item => !item.given));
         },
         take(state, action) {
-            const book = state.value[action.payload];
+            const index = action.payload;
 
-            if (book.given) {
-                delete book.given;
+            if (index >= 0) {
+                const book = state.value[index];
+                const originalBook = state.data.find(b => b.id === book.id);
     
-                state.away--;
-                state.atHome++;
+                if (book.given) {
+                    delete originalBook.given;
+                    delete book.given;
+        
+                    state.away--;
+                    state.atHome++;
+                }
             }
         },
         give(state, action) {
             const { selectedIndex, to } = action.payload;
 
-            const book = state.value[selectedIndex];
-
-            if (!book.given) {
-                state.away++;
-                state.atHome--;
-            }
-            
-            book.given = {
-                to,
-                on: new Date().toISOString().slice(0, 10)
+            if (selectedIndex >= 0) {
+                const book = state.value[selectedIndex];
+                const originalBook = state.data.find(b => b.id === book.id);
+    
+                if (!book.given) {
+                    state.away++;
+                    state.atHome--;
+                }
+                
+                book.given = originalBook.given = {
+                    to,
+                    on: new Date().toISOString().slice(0, 10)
+                }
             }
         },
         select(state, action) {
