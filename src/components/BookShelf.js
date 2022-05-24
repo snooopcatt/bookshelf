@@ -37,6 +37,11 @@ const BookShelf = () => {
         }
     });
 
+    // focus div by default
+    useEffect(() => {
+        shelfRef.current.focus();
+    }, [shelfRef]);
+
     // Scroll selected item into view
     useEffect(() => {
         const el = shelfRef.current.querySelector(`[data-index='${selectedIndex}']`);

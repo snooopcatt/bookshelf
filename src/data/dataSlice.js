@@ -14,7 +14,7 @@ const updateCounters = (state, array) => {
     state.away = away;
     state.atHome = atHome;
 
-    state.index = -1;
+    state.index = 0;
 
     state.value = array;
 }
@@ -27,7 +27,7 @@ export const dataSlice = createSlice({
         atHome: 0,
         away: 0,
         total: 0,
-        index: -1,
+        index: 0,
         query: ''
     },
     reducers: {
@@ -44,7 +44,7 @@ export const dataSlice = createSlice({
             const query = action.payload;
 
             state.query = query;
-            
+
             if (query === '') {
                 updateCounters(state, state.data);
             }
@@ -102,7 +102,7 @@ export const dataSlice = createSlice({
             state.index = action.payload;
         },
         reset(state) {
-            state.index = -1;
+            state.index = 0;
         }
     }
 });
