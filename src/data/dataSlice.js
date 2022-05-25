@@ -15,6 +15,7 @@ const updateCounters = (state, array) => {
     state.atHome = atHome;
 
     state.index = 0;
+    state.selectedBook = array[0];
 
     state.value = array;
 }
@@ -28,7 +29,8 @@ export const dataSlice = createSlice({
         away: 0,
         total: 0,
         index: 0,
-        query: ''
+        selectedBook: null,
+        query: '',
     },
     reducers: {
         setData(state, action) {
@@ -65,44 +67,49 @@ export const dataSlice = createSlice({
             updateCounters(state, state.data.filter(item => !item.given));
         },
         take(state, action) {
-            const index = action.payload;
+            let book = action.payload;
 
-            if (index >= 0) {
-                const book = state.value[index];
-                const originalBook = state.data.find(b => b.id === book.id);
+            if (book) {
+                book = state.data.find(b => b.id === book.id);
     
                 if (book.given) {
-                    delete originalBook.given;
                     delete book.given;
         
                     state.away--;
                     state.atHome++;
                 }
+
+                state.selectedBook = book;
             }
         },
         give(state, action) {
-            const { selectedIndex, to } = action.payload;
+            let { book, to } = action.payload;
 
-            if (selectedIndex >= 0) {
-                const book = state.value[selectedIndex];
-                const originalBook = state.data.find(b => b.id === book.id);
+            if (book) {
+                book = state.data.find(b => b.id === book.id);
     
                 if (!book.given) {
                     state.away++;
                     state.atHome--;
                 }
                 
-                book.given = originalBook.given = {
-                    to,
-                    on: new Date().toISOString().slice(0, 10)
-                }
+                const on = new Date().toISOString().slice(0, 10);
+
+                book.given = { to, on }
+
+                state.selectedBook = book;
             }
         },
         select(state, action) {
-            state.index = action.payload;
+            const index = action.payload;
+            const book = state.value[index];
+
+            state.index = index;
+            state.selectedBook = state.data.find(b => b.id === book.id);
         },
         reset(state) {
             state.index = 0;
+            state.selectedBook = null;
         }
     }
 });

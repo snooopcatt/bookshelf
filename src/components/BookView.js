@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { give, take } from "../data/dataSlice";
 
@@ -31,22 +30,9 @@ const getHintText = dateString => {
 
 const BookView = () => {
     console.log('Book view');
-    const books = useSelector(state => state.books.value);
-    const selectedIndex = useSelector(state => state.books.index);
-    const book = books[selectedIndex];
-    const given = !!book && 'given' in book;
+    const book = useSelector(state => state.books.selectedBook);
 
-    const [atHome, setAtHome] = useState(!given);
-    const [to, setTo] = useState(book?.given?.to || '');
-    const [selected, setSelected] = useState(selectedIndex);
-
-    const hintText = given ? getHintText(book.given.on) : '';
-
-    if (selected !== selectedIndex) {
-        setAtHome(!given);
-        setSelected(selectedIndex);
-        setTo(book?.given?.to || '');
-    }
+    const hintText = book?.given ? getHintText(book.given.on) : '';
 
     const dispatch = useDispatch();
 
@@ -54,19 +40,15 @@ const BookView = () => {
         const { id } = event.target;
 
         if (id === 'at_home') {
-            setAtHome(true);
-            setTo('');
-            dispatch(take(selectedIndex));
+            dispatch(take(book));
         }
         else {
-            setAtHome(false);
-            dispatch(give({ selectedIndex, to: '' }));
+            dispatch(give({ book, to: '' }));
         }
     }
 
     const handleName = ({ target }) => {
-        setTo(target.value);
-        dispatch(give({ selectedIndex, to: target.value }));
+        dispatch(give({ book, to: target.value }));
     }
 
     return (
@@ -80,7 +62,7 @@ const BookView = () => {
                             type="radio"
                             id="at_home"
                             name="status"
-                            checked={atHome}
+                            checked={!book.given}
                             onChange={handleRadioChange}
                             />
                         <label htmlFor="at_home">At home</label>
@@ -90,17 +72,17 @@ const BookView = () => {
                             type="radio"
                             id="away"
                             name="status"
-                            checked={!atHome}
+                            checked={!!book.given}
                             onChange={handleRadioChange}
                             />
                         <label htmlFor="away">Away {hintText}</label>
                     </div>
-                    { given ?
+                    { book.given ?
                         <div className="given-to">
                             <span>Given to</span>
                             <input
                                 type="text"
-                                value={to}
+                                value={book.given.to}
                                 onChange={handleName}
                                 />
                         </div>

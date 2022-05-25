@@ -3,6 +3,7 @@ import { filter, filterAtHome, filterAway } from "../data/dataSlice";
 import SearchField from "./SearchField";
 
 const Header = () => {
+    console.log('Header');
     const away = useSelector(state => state.books.away);
     const atHome = useSelector(state => state.books.atHome);
     const total = useSelector(state => state.books.total);
