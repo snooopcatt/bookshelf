@@ -17,6 +17,17 @@
 .book-item {
     padding: .5em 1em;
     background-color: transparent;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.book-item .book-item-content {
+    flex: 1;
+}
+
+.book-item .book-item-hint {
+    display: flex;
+    align-items: center;
 }
 
 .book-item:nth-child(even) {

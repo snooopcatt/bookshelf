@@ -80,6 +80,9 @@ export const dataSlice = createSlice({
                 }
 
                 state.selectedBook = book;
+
+                book = state.value.find(b => b.id === book.id);
+                book.given = false;
             }
         },
         give(state, action) {
@@ -98,6 +101,9 @@ export const dataSlice = createSlice({
                 book.given = { to, on }
 
                 state.selectedBook = book;
+
+                book = state.value.find(b => b.id === book.id);
+                book.given = true;
             }
         },
         select(state, action) {

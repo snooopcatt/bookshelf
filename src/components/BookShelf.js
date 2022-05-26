@@ -108,8 +108,11 @@ const BookShelf = () => {
                         dispatch(select(i))
                     }}
                 >
-                    <div className="book-title">{highlight(book.title, queryBits)}</div>
-                    <div className="book-author">{highlight(book.author, queryBits)}</div>
+                    <div className="book-item-content">
+                        <div className="book-title">{highlight(book.title, queryBits)}</div>
+                        <div className="book-author">{highlight(book.author, queryBits)}</div>
+                    </div>
+                    { book.given ? <div className="book-item-hint">Away</div> : '' }
                 </div>
                 )}
         </div>
