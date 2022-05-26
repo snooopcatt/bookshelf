@@ -4,3 +4,29 @@
     flex-flow: column nowrap;
     overflow: auto;
 }
+
+.book-shelf .hit {
+    background-color: yellow;
+}
+
+.book-item {
+    --bg-color: rgb(202, 206, 215);
+    --bg-color-selected: rgb(75, 75, 241);
+}
+
+.book-item {
+    padding: .5em 1em;
+    background-color: transparent;
+}
+
+.book-item:nth-child(even) {
+    background-color: var(--bg-color);
+}
+
+.book-item.selected {
+    background-color: var(--bg-color-selected);
+}
+
+.book-title {
+    font-weight: bolder;
+}
