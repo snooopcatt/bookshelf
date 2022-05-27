@@ -113,6 +113,27 @@ export const dataSlice = createSlice({
             state.index = index;
             state.selectedBook = state.data.find(b => b.id === book.id);
         },
+        next(state) {
+            // If current filtered list has any items in it
+            if (state.value.length) {
+                // Find next index stopping at the end of the array
+                const index = Math.min(state.index + 1, state.value.length - 1);
+                const book = state.value[index];
+                
+                state.index = index;
+                // Update selected book
+                state.selectedBook = state.data.find(b => b.id === book.id);
+            }
+        },
+        previous(state) {
+            if (state.value.length) {
+                const index = Math.max(state.index - 1, 0);
+                const book = state.value[index];
+                
+                state.index = index;
+                state.selectedBook = state.data.find(b => b.id === book.id);
+            }
+        },
         reset(state) {
             state.index = 0;
             state.selectedBook = null;
@@ -128,6 +149,8 @@ export const {
     give,
     take,
     select,
+    next,
+    previous,
     reset
 } = dataSlice.actions;
 

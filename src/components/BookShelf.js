@@ -1,7 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { select } from "../data/dataSlice";
+import { next, previous, select } from "../data/dataSlice";
 
+/**
+ * Converts string to array in which substrings matching passed queries are wrapped to
+ * highlighting element (span)
+ * @param {String} textContent 
+ * @param {RegExp[]} queryBits 
+ * @returns {Object[]}
+ */
 const highlight = (textContent, queryBits) => {
     // We want to split text content to parts consisting of substrings not matching
     // the search query and react elements which wrap matching strings
@@ -61,16 +68,17 @@ const BookShelf = () => {
     const shelfRef = useRef(null);
 
     useEffect(() => {
+        console.log('attach listener')
         const keyDownHandler = event => {
             console.log(event.key);
             switch (event.key) {
                 case 'ArrowDown':
                     event.preventDefault();
-                    dispatch(select(Math.min(selectedIndex + 1, books.length - 1)));
+                    dispatch(next());
                     break;
                 case 'ArrowUp':
                     event.preventDefault();
-                    dispatch(select(Math.max(selectedIndex - 1, 0)));
+                    dispatch(previous());
                     break;
                 default:
                     break;
@@ -84,7 +92,7 @@ const BookShelf = () => {
         return () => {
             el.removeEventListener('keydown', keyDownHandler);
         }
-    });
+    }, [shelfRef, dispatch]);
 
     // focus div by default
     useEffect(() => {
