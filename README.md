@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Bookshelf
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An avid book collector is looking for an app to help her keep track of books borrowed by her friends.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+The app will load the book inventory on start. It would display a summary of how many books were given away, how many are still at home, and the total number of books in the collection.
 
-### `npm start`
+The user is able to change a book's status ("at home" or "given away") and specify the name of the person to whom it was given. The app will take note of the date when this happened.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Data format
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Book details are stored in an object with `"author"` and `"title"` string properties. The "away" status is stored in a `"given"` property which, when specified, contains the name of the person who took it (`"given.to"`) and the date on which it hapened (`"given.on"`). The date is stored as a string in `YYYY-MM-DD` format.
 
-### `npm test`
+```js
+[
+  {
+    author: "Joanne Rowling",
+    title: "Harry Potter and the Chamber of Secrets",
+    given: {
+      to: "Daniel Craig",
+      on: "2022-01-03",
+    },
+  },
+];
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## User Interface
 
-### `npm run build`
+A list displays each book's title and author and indicates whether the book is given away. The first row is selected by default. User can navigate up and down the list using arrow keys. Selected row details can be edited in a side pane.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![](docs/at-home.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The side pane displays book's title and author, the "at home"/"away" switch, and optionally the name of the person who borrowed the book and the date information. The date information includes the date in user's locale format and the number of days passed since: `"1 Jan 1970 (today | yesterday | N days ago)"`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![](docs/away.png)
 
-### `npm run eject`
+A search field helps narrow down the list. Search results will affect the summary information.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![](docs/search.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Editing experience
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+If the book is at home, the radio button is in the "At home" position and no other controls are displayed. Switching to the "Away" state will reveal the "Given to" input field and append date information to the "Away" button label.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+When a book is returned, switching the radio button to the "At home" position will clear the relevant record property, hide the input, and remove the date information from the "Away" button label.
 
-## Learn More
+## Must have features
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Live search by book's title or author's name.
+- Update of summary on search.
+- Live status/summary update on edit.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Optional features
 
-### Code Splitting
+- Quick filter by clicking on "away", "at home", and "total" summary indicators.
+- Highlight search term maches in the list.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Technology choice
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to use any library/framework of your choice including our favourite, [Lightning Web Components](https://lwc.dev/).
