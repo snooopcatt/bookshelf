@@ -5,6 +5,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './data/store';
+import { setData } from './data/dataSlice';
+
+store.dispatch(dispatch => {
+  fetch('./inventory.json')
+    .then(response => response.json())
+    .then(json => {
+      console.log('load data');
+      dispatch(setData(json));
+    });
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
